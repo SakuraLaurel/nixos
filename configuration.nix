@@ -26,8 +26,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Btrfs：hardware-configuration.nix 负责 UUID 和 subvol；
-  # 这里补充挂载选项。nixos-generate-config 不会自动识别这些选项。
   fileSystems."/" = {
     options = [ "compress=zstd:3" "noatime" ];
   };
@@ -166,18 +164,18 @@
     kdePackages.discover
 
     # 桌面软件
-    #chromium
-    #vlc
-    #wpsoffice-cn
+    chromium
+    vlc
+    wpsoffice-cn
 
     # mihomo CLI
     mihomo
 
     # Python 基础；项目依赖建议走 nix develop / uv
-    #python3
-    #uv
+    python3
+    uv
 
-    #vscode.fhs
+    vscode.fhs
   ];
 
   environment.shellAliases = {
