@@ -3,51 +3,18 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ./usb-modeswitch.nix
+    ./locale.nix
+    ./users.nix
   ];
 
-  hardware.usb-modeswitch.enable = true;
-
+  nix.settings.substituters = [ "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"];
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.auto-optimise-store = true;
-
   nixpkgs.config.allowUnfree = true; # WPS 需要；wpsoffice-cn 是 unfree 包
 
   networking.hostName = "laurel";
-
-  # 如果你是新装系统，按 nixos-generate-config 生成的值保留；
-  # 以后升级 NixOS 不要随便改 system.stateVersion。
   system.stateVersion = "25.11";
-
-  time.timeZone = "Asia/Shanghai";
-
-  i18n.defaultLocale = "zh_CN.UTF-8";
-  i18n.supportedLocales = [
-    "zh_CN.UTF-8/UTF-8"
-    "en_US.UTF-8/UTF-8"
-  ];
-
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "zh_CN.UTF-8";
-    LC_IDENTIFICATION = "zh_CN.UTF-8";
-    LC_MEASUREMENT = "zh_CN.UTF-8";
-    LC_MONETARY = "zh_CN.UTF-8";
-    LC_NAME = "zh_CN.UTF-8";
-    LC_NUMERIC = "zh_CN.UTF-8";
-    LC_PAPER = "zh_CN.UTF-8";
-    LC_TELEPHONE = "zh_CN.UTF-8";
-    LC_TIME = "zh_CN.UTF-8";
-  };
-
-  users.users.sakura = {
-    isNormalUser = true;
-    description = "Sakura";
-    extraGroups = [ "wheel" "video" "audio" "input" ];
-  };
-
-  security.sudo = {
-    enable = true;
-    wheelNeedsPassword = true;
-  };
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
@@ -174,7 +141,7 @@
     enable = true;
     configFile = "/etc/mihomo/config.yaml";
     tunMode = true;
-    processesInfo = true;
+    #processesInfo = true;
     webui = pkgs.metacubexd;
   };
 
@@ -199,19 +166,26 @@
     kdePackages.discover
 
     # 桌面软件
-    chromium
-    vlc
-    wpsoffice-cn
+    #chromium
+    #vlc
+    #wpsoffice-cn
 
     # mihomo CLI
     mihomo
 
     # Python 基础；项目依赖建议走 nix develop / uv
-    python3
-    uv
+    #python3
+    #uv
 
-    vscode.fhs
+    #vscode.fhs
   ];
+
+  environment.shellAliases = {
+    nrs = "sudo nixos-rebuild switch --flake /etc/nixos#laurel";
+    ncg = "sudo nix-collect-garbage -d && sudo nixos-rebuild boot --flake /etc/nixos";
+    proxy-on = "export https_proxy=\"http://127.0.0.1:7890\" && export http_proxy=\"http://127.0.0.1:7890\"";
+    proxy-off = "unset https_proxy http_proxy";
+  };
 
   programs.git.enable = true;
 
