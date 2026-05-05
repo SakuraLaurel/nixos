@@ -1,5 +1,5 @@
 {
-  users.mutableUsers = false;
+  #users.mutableUsers = false;
   users.users.sakura = {
     isNormalUser = true;
     description = "Sakura";
