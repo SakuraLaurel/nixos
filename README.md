@@ -3,3 +3,17 @@
 eject /dev/sr0
 nmcli device wifi connect "SSID名称" password "密码"
 ```
+
+# MMDB
+
+```bash
+wget -P /var/lib/mihomo https://hub.keccak.top/MetaCubeX/meta-rules-dat/releases/download/latest/country.mmdb
+```
+
+# 新增配置
+
+```bash
+xxx="xxx"
+sudo chown root:wheel -R /etc/nixos/${xxx}.nix
+sudo chmod g+rwX /etc/nixos/${xxx}.nix
+```

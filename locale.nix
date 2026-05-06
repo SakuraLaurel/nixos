@@ -1,3 +1,5 @@
+{ pkgs, ... }:
+
 {
   time.timeZone = "Asia/Shanghai";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -16,5 +18,50 @@
     LC_PAPER = "zh_CN.UTF-8";
     LC_TELEPHONE = "zh_CN.UTF-8";
     LC_TIME = "zh_CN.UTF-8";
+    LC_MESSAGES = "zh_CN.UTF-8";
+  };
+
+  i18n.inputMethod = {
+    type = "fcitx5";
+    enable = true;
+
+    fcitx5 = {
+      waylandFrontend = true;
+      ignoreUserConfig = true;
+
+      addons = with pkgs; [
+        kdePackages.fcitx5-chinese-addons
+        kdePackages.fcitx5-qt
+        fcitx5-gtk
+      ];
+
+      settings = {
+        inputMethod = {
+          GroupOrder."0" = "Default";
+
+          "Groups/0" = {
+            Name = "Default";
+            "Default Layout" = "us";
+            DefaultIM = "pinyin";
+          };
+
+          "Groups/0/Items/0".Name = "keyboard-us";
+          "Groups/0/Items/1".Name = "pinyin";
+        };
+      };
+    };
+  };
+
+  fonts = {
+    fontconfig.enable = true;
+    packages = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      noto-fonts-color-emoji
+      source-han-sans
+      source-han-serif
+      wqy_microhei
+    ];
   };
 }
