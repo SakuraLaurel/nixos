@@ -12,7 +12,6 @@
     enable = true;
     user = "sakura";
   };
-
   programs.git = {
     enable = true;
     config = {

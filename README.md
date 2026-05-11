@@ -14,6 +14,11 @@ wget -P /var/lib/mihomo https://hub.keccak.top/MetaCubeX/meta-rules-dat/releases
 
 ```bash
 xxx="xxx"
+sudo touch /etc/nixos/${xxx}.nix
 sudo chown root:wheel -R /etc/nixos/${xxx}.nix
 sudo chmod g+rwX /etc/nixos/${xxx}.nix
 ```
+
+# 手动残余
+
+1. 设置->键盘->虚拟键盘->Fcitx 5.

@@ -7,6 +7,7 @@
     ./locale.nix
     ./users.nix
     ./networking.nix
+    ./desktop.nix
     ./softwares.nix
   ];
 
@@ -14,7 +15,6 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.auto-optimise-store = true;
 
-  networking.hostName = "laurel";
   system.stateVersion = "25.11";
 
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -46,30 +46,6 @@
 
   hardware.graphics.enable = true;
   hardware.amdgpu.initrd.enable = true;
-
-  services.xserver.enable = true;
-  services.displayManager.sddm = {
-    enable = true;
-    wayland.enable = true;
-  };
-  services.desktopManager.plasma6 = {
-    enable = true;
-    enableQt5Integration = true;
-  };
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-  security.rtkit.enable = true;
-  services.openssh = {
-    enable = true;
-    settings = {
-      PermitRootLogin = "no";
-      PasswordAuthentication = true; # 配好 SSH key 后建议改 false
-    };
-  };
 
   environment.shellAliases = {
     nrs = "sudo nixos-rebuild switch --flake /etc/nixos#laurel";
