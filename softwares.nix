@@ -3,6 +3,10 @@
 {
   nixpkgs.config.allowUnfree = true;
   services.flatpak.enable = true;
+  system.activationScripts.flatpakFlathubMirror.text = ''
+    ${pkgs.flatpak}/bin/flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo || true
+    ${pkgs.flatpak}/bin/flatpak remote-modify flathub --url=https://mirrors.ustc.edu.cn/flathub || true
+  '';
   environment.systemPackages = with pkgs; [
     git
     curl
@@ -19,5 +23,6 @@
     wpsoffice-cn
     vlc
     mihomo
+    qq
   ];
 }

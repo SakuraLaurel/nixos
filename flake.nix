@@ -16,12 +16,28 @@
     };
   };
 
-  outputs = inputs@{ nixpkgs, ... }: {
+  outputs = inputs@{ nixpkgs, ... }: 
+  let
+    system = "x86_64-linux";
+    pkgs = import nixpkgs { inherit system; };
+    pythonEnv = pkgs.python313.withPackages (ps: with ps; [
+      numpy
+      matplotlib
+      requests
+    ]);
+  in
+  {
     nixosConfigurations.laurel = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
+      inherit system;
       specialArgs = { inherit inputs; };
       modules = [
         ./configuration.nix
+      ];
+    };
+
+    devShells.${system}.default = pkgs.mkShell {
+      packages = [
+        pythonEnv
       ];
     };
   };

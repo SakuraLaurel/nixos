@@ -9,6 +9,7 @@
   services.displayManager.sddm = {
     enable = true;
     wayland.enable = true;
+    autoNumlock = true;
   };
   services.desktopManager.plasma6 = {
     enable = true;
@@ -57,9 +58,10 @@
         BottomLeft = "None";
         Left = "None";
         TopLeft = "None";
-       };
       };
-
+      };
+      
+      configFile."kcminputrc"."Keyboard"."NumLock" = 0;
       shortcuts = {
         "org.kde.spectacle.desktop" = {
           "FullScreenScreenShot" = "Alt+%";

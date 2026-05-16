@@ -17,7 +17,6 @@
     networks."20-wlan" = {
       matchConfig.Type = "wlan";
       networkConfig.DHCP = "yes";
-      linkConfig.RequiredForOnline = "no";
     };
   };
   services.openssh = {
