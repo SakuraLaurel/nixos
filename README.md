@@ -27,6 +27,18 @@ sudo chmod g+rwX /etc/nixos/${xxx}.nix
 flatpak update
 ```
 
+# 检查gpu顺序
+
+```bash
+vulkaninfo --summary | grep -E "GPU[0-9]|deviceName"
+```
+
+# 新建开发环境
+
+```bash
+nix develop ~/py --profile ~/py/profile
+```
+
 # 手动残余
 
 1. 设置->键盘->虚拟键盘->Fcitx 5.

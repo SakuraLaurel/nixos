@@ -9,9 +9,11 @@
   '';
   environment.systemPackages = with pkgs; [
     git
+    cmake
     curl
     wget
     vim
+    htop
     btrfs-progs
     kdePackages.dolphin
     kdePackages.konsole
@@ -24,5 +26,11 @@
     vlc
     mihomo
     qq
+
+    intel-gpu-tools
+    amdgpu_top
+    vulkan-loader
+    vulkan-tools
+    llama-cpp-vulkan
   ];
 }

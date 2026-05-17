@@ -44,12 +44,22 @@
     memoryPercent = 100;
   };
 
-  hardware.graphics.enable = true;
-  hardware.amdgpu.initrd.enable = true;
+  hardware.graphics = {
+    enable = true;
+
+    extraPackages = with pkgs; [
+      intel-media-driver
+    ];
+  };
+  boot.initrd.kernelModules = [
+    "i915"
+    "amdgpu"
+  ];
 
   environment.shellAliases = {
     nrs = "sudo nixos-rebuild switch --flake /etc/nixos#laurel";
     ncg = "sudo nix-collect-garbage -d && sudo nixos-rebuild boot --flake /etc/nixos";
+    push2github = "cd /etc/nixos && cp ~/py/flake.nix ./py.nix && git add . && git commit -m \"update\"";
     proxy-on = "export https_proxy=\"http://127.0.0.1:7890\" && export http_proxy=\"http://127.0.0.1:7890\"";
     proxy-off = "unset https_proxy http_proxy";
   };
