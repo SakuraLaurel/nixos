@@ -4,6 +4,14 @@ eject /dev/sr0
 nmcli device wifi connect "SSID名称" password "密码"
 ```
 
+# flake版本更新
+
+```bash
+cd /etc/nixos
+sudo nix flake update
+sudo nixos-rebuild switch --flake .#laurel
+```
+
 # MMDB
 
 ```bash
@@ -37,6 +45,7 @@ vulkaninfo --summary | grep -E "GPU[0-9]|deviceName"
 
 ```bash
 nix develop ~/py --profile ~/py/profile
+nix flake update ~/py  # 更新
 ```
 
 # 手动残余

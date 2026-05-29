@@ -53,7 +53,7 @@
   };
   boot.initrd.kernelModules = [
     "i915"
-    "amdgpu"
+    # "amdgpu"
   ];
 
   environment.shellAliases = {
