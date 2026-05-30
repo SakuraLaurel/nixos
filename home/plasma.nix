@@ -23,7 +23,7 @@
       kcminputrc.Keyboard.NumLock = 0;
       spectaclerc.General = {
         autoSaveImage = true;
-        copyImageToClipboard = true;
+	clipboardGroup = "PostScreenshotCopyImage";
       };
     };
 

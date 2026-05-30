@@ -18,7 +18,7 @@ let
     proxy-off = "unset http_proxy https_proxy";
 
     proxy-chrome = "${proxyEnv} google-chrome";
-  };
+};
 in
 {
   environment.shellAliases = shellAliases;
@@ -27,6 +27,18 @@ in
       CONFIG="$HOME/.config/mihomo/config.yaml"
       curl -L "$(cat "$HOME/nixos/clash-subscribe")" -o "$CONFIG"
       sed -i '/^[[:space:]]*external-ui[[:space:]]*:/d; /^[[:space:]]*external-controller[[:space:]]*:/a external-ui: ui' "$CONFIG"
+    }
+
+    global-mihomo(){
+      curl -X PATCH http://127.0.0.1:9090/configs \
+        -H 'Content-Type: application/json' \
+        -d '{"mode":"global"}'
+    }
+
+    rule-mihomo(){
+      curl -X PATCH http://127.0.0.1:9090/configs \
+        -H 'Content-Type: application/json' \
+        -d '{"mode":"rule"}'
     }
   '';
 }

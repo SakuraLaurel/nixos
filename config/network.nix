@@ -15,6 +15,7 @@
 
   systemd.network = {
     enable = true;
+    wait-online.enable = false;
     networks = {
       "10-ethernet" = {
         matchConfig.Type = "ether";
