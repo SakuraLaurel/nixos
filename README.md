@@ -17,7 +17,7 @@ sudo mount -o subvol=@log,compress=zstd:3,noatime $TARGET /mnt/var/log
 # 通过镜像源安装
 
 ```bash
-nixos-install --root /mnt --flake /home/sakura/nixos#laurel --option substituters https://mirrors.ustc.edu.cn/nix-channels/store
+sudo nixos-install --root /mnt --flake /mnt/home/sakura/nixos#laurel --option substituters https://mirrors.ustc.edu.cn/nix-channels/store
 ```
 
 # 检查

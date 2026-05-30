@@ -1,3 +1,5 @@
+{ pkgs, ... }:
+
 {
   imports = [
     ./plasma.nix
@@ -17,4 +19,8 @@
       };
     };
   };
+  home.activation.addUserFlathub = ''
+    ${pkgs.flatpak}/bin/flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+    ${pkgs.flatpak}/bin/flatpak --user remote-modify flathub --url=https://mirrors.ustc.edu.cn/flathub
+  '';
 }
