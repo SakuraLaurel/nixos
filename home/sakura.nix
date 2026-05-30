@@ -4,10 +4,11 @@
   imports = [
     ./plasma.nix
     ./konsole.nix
-    ./neovim.nix
+    ./nixvim.nix
   ];
 
   home.stateVersion = "26.05";
+
   programs = {
     git = {
       enable = true;
@@ -19,8 +20,30 @@
       };
     };
   };
+
   home.activation.addUserFlathub = ''
     ${pkgs.flatpak}/bin/flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
     ${pkgs.flatpak}/bin/flatpak --user remote-modify flathub --url=https://mirrors.ustc.edu.cn/flathub
   '';
+
+  home.packages = with pkgs; [
+    ripgrep
+    fd
+
+    gnumake
+    cmake
+    ninja
+    gcc
+    clang-tools
+    bear
+
+    pyright
+    ruff
+    (python314.withPackages (ps: with ps; [
+      pytest
+      requests
+      numpy
+      matplotlib
+    ]))
+  ];
 }

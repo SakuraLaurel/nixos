@@ -14,13 +14,9 @@
   fonts = {
     fontconfig.enable = true;
     packages = with pkgs; [
-      noto-fonts
-      noto-fonts-cjk-sans
-      noto-fonts-cjk-serif
-      noto-fonts-color-emoji
-      source-han-sans
-      source-han-serif
-      wqy_microhei
+      nerd-fonts.jetbrains-mono  # 拉丁字母 + 终端 / nixvim 图标
+      noto-fonts-cjk-sans  # 中文 / 日文 / 韩文，接近系统 UI 的无衬线风格
+      noto-fonts-color-emoji  # emoji
     ];
   };
 
