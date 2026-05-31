@@ -1,7 +1,7 @@
 {
-    inlayHints.enable = true;
+  inlayHints.enable = true;
 
-    keymaps = [
+  keymaps = [
     { key = "gd"; lspBufAction = "definition"; }
     { key = "gD"; lspBufAction = "declaration"; }
     { key = "gr"; lspBufAction = "references"; }
@@ -10,18 +10,17 @@
     { key = "K"; lspBufAction = "hover"; }
     { key = "<leader>rn"; lspBufAction = "rename"; }
     {
-        key = "<leader>ca";
-        mode = [ "n" "v" ];
-        lspBufAction = "code_action";
+      key = "<leader>ca";
+      mode = [ "n" "v" ];
+      lspBufAction = "code_action";
     }
-    ];
+  ];
 
-    servers = {
+  servers = {
     clangd = {
-        enable = true;
-        packageFallback = true;
-
-        config = {
+      enable = true;
+      packageFallback = true;
+      config = {
         cmd = [
             "clangd"
             "--background-index"
@@ -29,52 +28,35 @@
             "--completion-style=detailed"
             "--header-insertion=iwyu"
         ];
-
         root_markers = [
-            "compile_commands.json"
-            "compile_flags.txt"
-            ".clangd"
-            ".git"
+          "compile_commands.json"
+          "compile_flags.txt"
+          ".clangd"
+          ".git"
         ];
-        };
+      };
     };
 
     pyright = {
-        enable = true;
-        packageFallback = true;
-
-        config = {
-        settings = {
-            python = {
-            analysis = {
-                typeCheckingMode = "basic";
-                autoSearchPaths = true;
-                useLibraryCodeForTypes = true;
-                diagnosticMode = "workspace";
-            };
-            };
-        };
-        };
+      enable = true;
+      packageFallback = true;
+      config.settings.python.analysis = {
+        typeCheckingMode = "basic";
+        autoSearchPaths = true;
+        useLibraryCodeForTypes = true;
+        diagnosticMode = "workspace";
+      };
     };
 
     ruff = {
-        enable = true;
-        packageFallback = true;
+      enable = true;
+      packageFallback = true;
     };
 
     nixd = {
-        enable = true;
-        packageFallback = true;
-
-        config = {
-        settings = {
-            nixd = {
-            formatting = {
-                command = [ "nixfmt" ];
-            };
-            };
-        };
-        };
+      enable = true;
+      packageFallback = true;
+      config.settings.nixd.formatting.command = [ "nixfmt" ];
     };
-    };
+  };
 }

@@ -12,11 +12,43 @@
   ];
 
   fonts = {
-    fontconfig.enable = true;
+    fontconfig = {
+      enable = true;
+
+      defaultFonts = {
+        sansSerif = [
+          "Noto Sans"
+          "Noto Sans CJK TC"
+          "Noto Sans CJK SC"
+          "Noto Color Emoji"
+        ];
+
+        serif = [
+          "Noto Serif"
+          "Noto Serif CJK TC"
+          "Noto Serif CJK SC"
+          "Noto Color Emoji"
+        ];
+
+        monospace = [
+          "JetBrainsMono Nerd Font"
+          "Noto Sans Mono CJK TC"
+          "Noto Sans Mono CJK SC"
+          "Noto Color Emoji"
+        ];
+
+        emoji = [
+          "Noto Color Emoji"
+        ];
+      };
+    };
+
     packages = with pkgs; [
-      nerd-fonts.jetbrains-mono  # 拉丁字母 + 终端 / nixvim 图标
-      noto-fonts-cjk-sans  # 中文 / 日文 / 韩文，接近系统 UI 的无衬线风格
-      noto-fonts-color-emoji  # emoji
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      noto-fonts-color-emoji
+      nerd-fonts.jetbrains-mono
     ];
   };
 
