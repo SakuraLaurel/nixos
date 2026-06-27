@@ -27,23 +27,19 @@
   '';
 
   home.packages = with pkgs; [
-    ripgrep
-    fd
-
-    gnumake
     cmake
     ninja
     gcc
     clang-tools
-    bear
-
     pyright
     ruff
-    (python314.withPackages (ps: with ps; [
-      pytest
-      requests
-      numpy
-      matplotlib
-    ]))
+    pytest
+    (python314.withPackages (
+      ps: with ps; [
+        requests
+        numpy
+        matplotlib
+      ]
+    ))
   ];
 }

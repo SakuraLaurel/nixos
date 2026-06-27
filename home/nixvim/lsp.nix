@@ -2,16 +2,40 @@
   inlayHints.enable = true;
 
   keymaps = [
-    { key = "gd"; lspBufAction = "definition"; }
-    { key = "gD"; lspBufAction = "declaration"; }
-    { key = "gr"; lspBufAction = "references"; }
-    { key = "gi"; lspBufAction = "implementation"; }
-    { key = "gt"; lspBufAction = "type_definition"; }
-    { key = "K"; lspBufAction = "hover"; }
-    { key = "<leader>rn"; lspBufAction = "rename"; }
+    {
+      key = "gd";
+      lspBufAction = "definition";
+    }
+    {
+      key = "gD";
+      lspBufAction = "declaration";
+    }
+    {
+      key = "gr";
+      lspBufAction = "references";
+    }
+    {
+      key = "gi";
+      lspBufAction = "implementation";
+    }
+    {
+      key = "gt";
+      lspBufAction = "type_definition";
+    }
+    {
+      key = "K";
+      lspBufAction = "hover";
+    }
+    {
+      key = "<leader>rn";
+      lspBufAction = "rename";
+    }
     {
       key = "<leader>ca";
-      mode = [ "n" "v" ];
+      mode = [
+        "n"
+        "v"
+      ];
       lspBufAction = "code_action";
     }
   ];
@@ -22,11 +46,12 @@
       packageFallback = true;
       config = {
         cmd = [
-            "clangd"
-            "--background-index"
-            "--clang-tidy"
-            "--completion-style=detailed"
-            "--header-insertion=iwyu"
+          "clangd"
+          "--background-index"
+          "--clang-tidy"
+          "--completion-style=detailed"
+          "--header-insertion=iwyu"
+          "--compile-commands-dir=build"
         ];
         root_markers = [
           "compile_commands.json"

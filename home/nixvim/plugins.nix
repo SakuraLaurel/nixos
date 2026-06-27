@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 {
   nvim-autopairs.enable = true;
@@ -8,7 +13,8 @@
   web-devicons.enable = true;
   gitsigns.enable = true;
   oil.enable = true;
-  lspconfig.enable = true;  # 新式：lspconfig 提供默认 server config，真正启用 server 用 programs.nixvim.lsp.servers
+  lspconfig.enable = true;
+
   treesitter = {
     enable = true;
     highlight.enable = true;
@@ -31,26 +37,65 @@
     ];
   };
 
+  fugitive = {
+    enable = true;
+  };
+
+  # GBrowse 一般需要这个
+  rhubarb = {
+    enable = true;
+  };
+
   blink-cmp = {
     enable = true;
-    setupLspCapabilities = true;
-
     settings = {
-      keymap.preset = "super-tab";  # 从 C-y 接受变为 Tab 接受，接近 VSCode 习惯
-      appearance.nerd_font_variant = "mono";
-      completion.documentation = {
-        auto_show = true;
-        auto_show_delay_ms = 200;
+      keymap = {
+        preset = "super-tab";
       };
-
-      sources.default = [
-        "lsp"
-        "path"
-        "snippets"
-        "buffer"
-      ];
-
-      fuzzy.implementation = "prefer_rust_with_warning";
+      completion = {
+        menu = {
+          auto_show = lib.nixvim.mkRaw ''
+            function() 
+              local ok, suggestion = pcall(require, "copilot.suggestion") 
+              return (not ok) or (not suggestion.is_visible()) 
+            end 
+          '';
+        };
+        list = {
+          selection = {
+            preselect = true;
+            auto_insert = false;
+          };
+        };
+        documentation = {
+          auto_show = true;
+          auto_show_delay_ms = 200;
+        };
+        ghost_text = {
+          enabled = false;
+        };
+      };
+      signature = {
+        enabled = true;
+        window = {
+          show_documentation = false;
+        };
+      };
+      sources = {
+        default = [
+          "lsp"
+          "path"
+          "buffer"
+        ];
+        providers = {
+          snippets = {
+            enabled = false;
+          };
+        };
+      };
+      fuzzy = {
+        implementation = "prefer_rust_with_warning";
+      };
     };
   };
 
@@ -70,8 +115,8 @@
         c = [ "clang_format" ];
         cpp = [ "clang_format" ];
         python = [
-            "ruff_organize_imports"
-            "ruff_format"
+          "ruff_organize_imports"
+          "ruff_format"
         ];
         nix = [ "nixfmt" ];
       };
@@ -84,31 +129,59 @@
     testRunner = "pytest";
   };
 
+  copilot-lsp = {
+    enable = true;
+    callSetup = true;
+    settings = {
+      nes = {
+        move_count_threshold = 10;
+      };
+    };
+  };
+
+  # 对应 zbirenbaum/copilot.lua
   copilot-lua = {
     enable = true;
-
     settings = {
-      panel.enabled = false;
+      panel = {
+        enabled = false;
+      };
+
       suggestion = {
         enabled = true;
         auto_trigger = true;
         hide_during_completion = true;
+        debounce = 75;
 
-        keymap = {  # 避免和 blink.cmp 的 Tab 冲突
+        keymap = {
           accept = "<M-l>";
-          accept_word = "<M-w>";
-          accept_line = "<M-j>";
+          accept_word = false;
+          accept_line = false;
           next = "<M-]>";
           prev = "<M-[>";
           dismiss = "<C-]>";
+          toggle_auto_trigger = false;
+        };
+      };
+
+      nes = {
+        enabled = true;
+        auto_trigger = true;
+
+        keymap = {
+          accept_and_goto = "<leader>cn";
+          accept = false;
+          dismiss = "<leader>cd";
         };
       };
 
       filetypes = {
         python = true;
         cpp = true;
-        help = false;
-        "." = false;
+        c = true;
+        rust = true;
+        lua = true;
+        "*" = false;
       };
 
       copilot_node_command = lib.getExe pkgs.nodejs_26;

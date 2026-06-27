@@ -22,7 +22,7 @@ sudo nixos-install --root /mnt --flake /mnt/home/sakura/nixos#laurel --option su
 
 # 检查
 1. hardware-configuration.nix是否更新
-2. password-hash文件是否放置妥当；必须放在系统所在卷下，否则系统启动时可能读取不到: 
+2. password-hash文件必须放在系统所在卷下，否则系统启动时可能读取不到: 
 
 ```bash
 # 生成

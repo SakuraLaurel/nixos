@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 {
   programs.nixvim = {
@@ -9,11 +14,13 @@
     vimAlias = true;
 
     extraPackages = with pkgs; [
-      nixd    # 写 Nix 时的 LSP / 智能提示
-      nixfmt  # 格式化 Nix 代码
-      statix  # 检查 Nix 代码质量
+      ripgrep
+      fd
+      nixd # 写 Nix 时的 LSP / 智能提示
+      nixfmt # 格式化 Nix 代码
+      statix # 检查 Nix 代码质量
       deadnix # 找 Nix 里的未使用代码
-      nodejs_26  # Copilot
+      nodejs_26 # Copilot
     ];
 
     colorschemes.rose-pine = {
@@ -24,34 +31,8 @@
     globals = {
       mapleader = " ";
       maplocalleader = ",";
+      copilot_nes_debounce = 500;
     };
-
-    keymaps = [
-      {
-        mode = "n";
-        key = "<leader>ff";
-        action = "<cmd>Telescope find_files<cr>";
-        options.desc = "Find files";
-      }
-      {
-        mode = "n";
-        key = "<leader>fg";
-        action = "<cmd>Telescope live_grep<cr>";
-        options.desc = "Live grep";
-      }
-      {
-        mode = "n";
-        key = "<leader>fb";
-        action = "<cmd>Telescope buffers<cr>";
-        options.desc = "Buffers";
-      }
-      {
-        mode = "n";
-        key = "<leader>e";
-        action = "<cmd>Oil<cr>";
-        options.desc = "File explorer";
-      }
-    ];
 
     opts = {
       number = true;
@@ -75,10 +56,23 @@
       timeoutlen = 400;
 
       clipboard = "unnamedplus";
-
       termguicolors = true;
       background = "light";
+
+      foldlevel = 99;
+      foldlevelstart = 99;
     };
+
+    diagnostic.settings = {
+      virtual_text = true;
+      severity_sort = true;
+
+      float = {
+        source = true;
+      };
+    };
+
+    keymaps = import ./nixvim/keymaps.nix;
 
     plugins = import ./nixvim/plugins.nix {
       inherit pkgs lib config;
@@ -86,6 +80,31 @@
 
     lsp = import ./nixvim/lsp.nix;
 
-    extraConfigLua = builtins.readFile ./nixvim/extraConfig.lua;
+    autoCmd = [
+      {
+        event = "User";
+        pattern = "BlinkCmpMenuOpen";
+        callback = {
+          __raw = ''
+            function()
+              require("copilot.suggestion").dismiss()
+              vim.b.copilot_suggestion_hidden = true
+            end
+          '';
+        };
+      }
+
+      {
+        event = "User";
+        pattern = "BlinkCmpMenuClose";
+        callback = {
+          __raw = ''
+            function()
+              vim.b.copilot_suggestion_hidden = false
+            end
+          '';
+        };
+      }
+    ];
   };
 }
