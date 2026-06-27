@@ -33,9 +33,9 @@
     clang-tools
     pyright
     ruff
-    pytest
     (python314.withPackages (
       ps: with ps; [
+        pytest
         requests
         numpy
         matplotlib

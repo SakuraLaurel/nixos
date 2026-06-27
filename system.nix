@@ -3,7 +3,15 @@
 {
   nix.settings = {
     substituters = [
-      "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
+      "https://mirrors.ustc.edu.cn/nix-channels/store?priority=10"
+      "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store?priority=20"
+      "https://mirror.sjtu.edu.cn/nix-channels/store?priority=30"
+      "https://cache.nixos.org/?priority=40"
+    ];
+
+    trusted-public-keys = [
+      "cache.nixos.org-1:6NCHdD59X431o0gWryvZl6K7CNmQmAX4KAaFh7a3Q9E="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
 
     experimental-features = [
@@ -31,15 +39,24 @@
   };
 
   fileSystems."/" = {
-    options = [ "compress=zstd:3" "noatime" ];
+    options = [
+      "compress=zstd:3"
+      "noatime"
+    ];
   };
 
   fileSystems."/home" = {
-    options = [ "compress=zstd:3" "noatime" ];
+    options = [
+      "compress=zstd:3"
+      "noatime"
+    ];
   };
 
   fileSystems."/nix" = {
-    options = [ "compress=zstd:3" "noatime" ];
+    options = [
+      "compress=zstd:3"
+      "noatime"
+    ];
   };
 
   services.btrfs.autoScrub = {

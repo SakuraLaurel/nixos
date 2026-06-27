@@ -54,7 +54,7 @@
       };
       completion = {
         menu = {
-          auto_show = lib.nixvim.mkRaw ''
+          auto_show = config.lib.nixvim.mkRaw ''
             function() 
               local ok, suggestion = pcall(require, "copilot.suggestion") 
               return (not ok) or (not suggestion.is_visible()) 
