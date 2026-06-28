@@ -22,6 +22,7 @@
     key = "<leader>r";
     action.__raw = ''
       function()
+        vim.cmd("update")
         local file = vim.fn.expand("%:p")
         local root = vim.fs.root(0, { "pyproject.toml", ".git" }) or vim.fn.getcwd()
 
